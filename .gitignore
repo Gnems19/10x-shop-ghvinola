@@ -23,13 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local assignment extracts / scratch
-prd.txt
-appendix-a.txt
-*.docx
+# Local assignment files and scratch media, repo root only (app images in src/ and public/ must stay tracked)
+/prd.txt
+/appendix-a.txt
+/*.docx
+/*.jpg
+/*.webp
 
-
-# Unrelated local media
-*.jpg
-*.webp
-
+# Logo design sources, not used by the app
+/.design-work/
+/src/assets/ghvinola*
