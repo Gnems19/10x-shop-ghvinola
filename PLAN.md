@@ -25,6 +25,7 @@ Search / category / sort / pagination, Orders, Profile, Reviews, Related product
 - Layout and proportions inspired by [King River](https://kingriver.com.au/): full-bleed hero, 1600px container, thin hairline dividers, serif body text with small uppercase sans-serif labels.
 - Wine palette (oxblood, claret, rosé, cream) defined as Tailwind `@theme` tokens in `src/index.css`.
 - Ghvinola wordmark in the header. Showcase boxes on the home page are reserved for wine bottle and Chocola chocolate photos; catalog, product, and cart data stay on DummyJSON as the assignment requires.
+- Smooth mouse-wheel scrolling like King River's (they use the Lenis library). Ours is a small custom hook, `useSmoothScroll`, because the assignment does not allow extra libraries. It turns off when the user prefers reduced motion; keyboard, touch, and scrollbar scrolling stay native.
 
 ## Three-week stages
 

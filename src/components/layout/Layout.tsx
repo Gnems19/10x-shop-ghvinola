@@ -1,9 +1,12 @@
 import { Outlet } from 'react-router-dom'
+import useSmoothScroll from '../../hooks/useSmoothScroll'
 import Footer from './Footer'
 import Header from './Header'
 import ScrollToTop from './ScrollToTop'
 
 export default function Layout() {
+  useSmoothScroll()
+
   return (
     <div className="flex min-h-svh flex-col">
       <ScrollToTop />
