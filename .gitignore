@@ -33,3 +33,4 @@ dist-ssr
 # Logo design sources, not used by the app
 /.design-work/
 /src/assets/ghvinola*
+~ai-*.tmp
