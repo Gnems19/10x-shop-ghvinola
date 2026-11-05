@@ -19,7 +19,7 @@ export default function Footer() {
           <div className="md:col-span-6">
             <GhvinolaWordmark className="h-12 w-auto lg:h-14" />
             <p className="mt-6 max-w-sm text-lg/relaxed text-cream/70">
-              Wine and chocolate, chosen for the table.
+              From our family to yours.
             </p>
           </div>
 

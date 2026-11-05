@@ -1,4 +1,5 @@
 import Container from '../ui/Container'
+import GeorgiaMapIcon from '../ui/GeorgiaMapIcon'
 import GhvinolaWordmark from '../ui/GhvinolaWordmark'
 
 export default function Hero() {
@@ -22,19 +23,9 @@ export default function Hero() {
         </div>
 
         <div className="flex items-center justify-between gap-4 border-t border-cream/25 py-5">
-          <p className="flex items-center gap-2">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              className="size-4"
-            >
-              <path d="M12 21s-7-6.2-7-11.5a7 7 0 1 1 14 0C19 14.8 12 21 12 21Z" />
-              <circle cx="12" cy="9.5" r="2.5" />
-            </svg>
-            Georgia
+          <p className="flex items-center gap-2.5">
+            <GeorgiaMapIcon className="h-5 w-auto" />
+            Kutaisi, Georgia
           </p>
           <p className="font-sans text-xs font-bold tracking-widest uppercase">Wine & Chocolate</p>
         </div>
