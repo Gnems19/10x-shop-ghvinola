@@ -20,6 +20,12 @@ Deliver the **CORE** checklist first (minimum for a passing grade). FULL feature
 
 Search / category / sort / pagination, Orders, Profile, Reviews, Related products, Promo codes, Formik + Yup, dark theme, lazy routes.
 
+## Design direction
+
+- Layout and proportions inspired by [King River](https://kingriver.com.au/): full-bleed hero, 1600px container, thin hairline dividers, serif body text with small uppercase sans-serif labels.
+- Wine palette (oxblood, claret, rosé, cream) defined as Tailwind `@theme` tokens in `src/index.css`.
+- Ghvinola wordmark in the header. Showcase boxes on the home page are reserved for wine bottle and Chocola chocolate photos; catalog, product, and cart data stay on DummyJSON as the assignment requires.
+
 ## Three-week stages
 
 | Week | Focus |
@@ -33,8 +39,8 @@ Search / category / sort / pagination, Orders, Profile, Reviews, Related product
 - [x] Vite + React + TypeScript + Tailwind CSS v4 scaffold
 - [x] `typecheck` / `build` scripts
 - [x] GitHub repository + initial commit
-- [ ] Shared TypeScript types
-- [ ] Layout, Header, React Router routes
+- [x] Shared TypeScript types
+- [x] Layout, Header, Footer, React Router routes (wine theme)
 - [ ] AuthContext + Login
 - [ ] Catalog + ProductCard
 - [ ] Product details
