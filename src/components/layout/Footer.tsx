@@ -6,7 +6,6 @@ const FOOTER_LINKS = [
   { to: '/', label: 'Catalog' },
   { to: '/cart', label: 'Cart' },
   { to: '/checkout', label: 'Checkout' },
-  { to: '/login', label: 'Log in' },
 ]
 
 const CURRENT_YEAR = new Date().getFullYear()

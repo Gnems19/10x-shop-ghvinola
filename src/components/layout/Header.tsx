@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 import Container from '../ui/Container'
 import GhvinolaWordmark from '../ui/GhvinolaWordmark'
 
@@ -12,7 +13,6 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'Catalog', end: true },
   { to: '/cart', label: 'Cart' },
-  { to: '/login', label: 'Log in' },
 ]
 
 const desktopLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -27,8 +27,16 @@ const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { isLoggedIn, logout } = useAuth()
+  const navigate = useNavigate()
 
   const closeMenu = () => setIsMenuOpen(false)
+
+  const handleLogout = () => {
+    logout()
+    closeMenu()
+    navigate('/')
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-wine-900 text-cream">
@@ -54,6 +62,21 @@ export default function Header() {
                   </NavLink>
                 </li>
               ))}
+              <li>
+                {isLoggedIn ? (
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className={`cursor-pointer ${desktopLinkClass({ isActive: false })}`}
+                  >
+                    Log out
+                  </button>
+                ) : (
+                  <NavLink to="/login" className={desktopLinkClass}>
+                    Log in
+                  </NavLink>
+                )}
+              </li>
             </ul>
           </nav>
 
@@ -63,7 +86,7 @@ export default function Header() {
             aria-controls="mobile-menu"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             onClick={() => setIsMenuOpen((open) => !open)}
-            className="-mr-2.5 grid size-11 place-items-center transition-colors hover:text-wine-300 focus-visible:outline-2 focus-visible:outline-wine-300 md:hidden"
+            className="-mr-2.5 grid size-11 cursor-pointer place-items-center transition-colors hover:text-wine-300 focus-visible:outline-2 focus-visible:outline-wine-300 md:hidden"
           >
             <span aria-hidden="true" className="flex h-4 w-6 flex-col justify-between">
               <span
@@ -90,6 +113,21 @@ export default function Header() {
                   </NavLink>
                 </li>
               ))}
+              <li>
+                {isLoggedIn ? (
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className={`w-full cursor-pointer ${mobileLinkClass({ isActive: false })}`}
+                  >
+                    Log out
+                  </button>
+                ) : (
+                  <NavLink to="/login" onClick={closeMenu} className={mobileLinkClass}>
+                    Log in
+                  </NavLink>
+                )}
+              </li>
             </ul>
           </nav>
         )}

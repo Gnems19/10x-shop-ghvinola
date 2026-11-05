@@ -43,7 +43,7 @@ Search / category / sort / pagination, Orders, Profile, Reviews, Related product
 - [x] GitHub repository + initial commit
 - [x] Shared TypeScript types
 - [x] Layout, Header, Footer, React Router routes (wine theme)
-- [ ] AuthContext + Login
+- [x] AuthContext + Login
 - [ ] Catalog + ProductCard
 - [ ] Product details
 - [ ] CartContext + Cart page
