@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { startTransition, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import Container from '../ui/Container'
@@ -33,9 +33,13 @@ export default function Header() {
   const closeMenu = () => setIsMenuOpen(false)
 
   const handleLogout = () => {
-    logout()
     closeMenu()
-    navigate('/')
+    // React Router renders navigations as transitions; logging out in the same transition
+    // keeps ProtectedRoute from seeing a guest on /checkout and redirecting to /login.
+    startTransition(() => {
+      logout()
+      navigate('/')
+    })
   }
 
   return (

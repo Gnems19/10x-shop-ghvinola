@@ -24,7 +24,7 @@ npm run lint
 
 ## Status
 
-Project scaffold is ready. CORE features (login, catalog, product details, cart, checkout) are next — see [PLAN.md](./PLAN.md).
+Layout, routing, and the simulated login are done: `AuthContext` holds the username, and a checkout guard sends guests to `/login` and back. Catalog, product details, cart, and checkout are next — see [PLAN.md](./PLAN.md).
 
 ## Live demo
 

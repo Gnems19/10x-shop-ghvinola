@@ -44,6 +44,7 @@ Search / category / sort / pagination, Orders, Profile, Reviews, Related product
 - [x] Shared TypeScript types
 - [x] Layout, Header, Footer, React Router routes (wine theme)
 - [x] AuthContext + Login
+- [x] Checkout guard (`ProtectedRoute`): guests go to `/login` and come back to checkout after logging in
 - [ ] Catalog + ProductCard
 - [ ] Product details
 - [ ] CartContext + Cart page
