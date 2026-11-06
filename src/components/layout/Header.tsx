@@ -49,12 +49,10 @@ export default function Header() {
           <Link
             to="/"
             onClick={closeMenu}
-            className="flex items-center gap-3 transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine-300"
+            className="flex items-center transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine-300"
           >
             <GhvinolaWordmark className="h-8 w-auto lg:h-10" />
-            <span className="border-l border-cream/25 py-1 pl-3 font-sans text-xs font-bold tracking-widest uppercase">
-              10X Shop
-            </span>
+            <span className="sr-only">10X Shop</span>
           </Link>
 
           <nav aria-label="Primary" className="hidden md:block">
