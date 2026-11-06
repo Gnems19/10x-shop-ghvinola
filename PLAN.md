@@ -64,42 +64,43 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 
 ### Product (~1.5 h)
 
-- [ ] **Step 10 · Product details** with `useParams` and `GET /products/:id`.
+- [x] **Step 10 · Product details** with `useParams` and `GET /products/:id`.
   Done when title, image, description, price, and stock show, and an unknown ID shows the 404 page instead of crashing.
-- [ ] **Step 11 · Photo and quantity choice, Add to Cart.**
+- [x] **Step 11 · Photo and quantity choice, Add to Cart.**
   Done when the chosen quantity lands in the shared cart.
 
 ### Cart (~1.5 h)
 
-- [ ] **Step 12 · CartContext** with add, remove, and setQuantity as immutable updates (optionally saved to `shop_cart` in localStorage), plus the Add to cart button on catalog cards that the appendix lists as CORE.
+- [x] **Step 12 · CartContext** with add, remove, and setQuantity as immutable updates (optionally saved to `shop_cart` in localStorage), plus the Add to cart button on catalog cards that the appendix lists as CORE.
   Done when the header badge and the cart page always show the same items.
-- [ ] **Step 13 · Cart page** with the item list, quantity, remove, subtotal, and total.
+- [x] **Step 13 · Cart page** with the item list, quantity, remove, subtotal, and total.
   Done when changes update the total, prices match the discounted prices on the cards (`discountedPrice` in `utils/format.ts`), and an empty cart reads "Your cart is empty."
 
 ### Checkout (~1 h)
 
-- [ ] **Step 14 · Checkout form** with Full name, Email, Address, and City as controlled fields with required validation.
+- [x] **Step 14 · Checkout form** with Full name, Email, Address, and City as controlled fields with required validation.
   Done when empty required fields block the submit and show their errors.
-- [ ] **Step 15 · Local order confirmation.**
+- [x] **Step 15 · Local order confirmation.**
   Done when Place order shows a Thank you summary and empties the cart.
 
 ### Quality (~1.5 h)
 
-- [ ] **Error Boundary** (optimization module): a class component with the fallback "Something went wrong." and a "Reload" button.
+- [x] **Error Boundary** (optimization module): a class component with the fallback "Something went wrong." and a "Reload" button.
   Done when an error thrown in a page shows the fallback instead of a blank screen.
-- [ ] **Lint rules from the appendix:** no `any` (error) and hook dependency checks (warning).
+- [x] **Lint rules from the appendix:** no `any` (error) and hook dependency checks (warning).
   Done when `npm run lint` reports nothing.
 - [ ] **Steps 16, 19–21 · Concept check, responsive finish, interactive states, happy path.**
   Done when Catalog → Product → Cart → Login → Checkout → confirmation works at 375px and on desktop in Chrome and Firefox, with no horizontal scroll and visible hover/focus states.
-- [ ] **Steps 22–23 · Loading/error/empty states and final checks.**
+  Chrome at 375px and on desktop passes on the live site; Firefox is not tested yet.
+- [x] **Steps 22–23 · Loading/error/empty states and final checks.**
   Done when an API error never crashes the app, `typecheck` has 0 errors, and `build` passes.
 
 ### Docs and deploy (~1.5 h)
 
 - [x] **Step 24 · Deploy to Vercel** with an SPA rewrite.
   Done when the live link works, `/products/5` opens on refresh, and the link is in the README.
-- [ ] **Lighthouse report** of the live site (Mobile preset), saved in `docs/lighthouse/`.
-- [ ] **Step 25 · README, PLAN, REPORT.md, and DEBUG-LOG.md** (at least 3 real bugs: symptom, steps, tool, cause, fix commit, lesson).
+- [x] **Lighthouse report** of the live site (Mobile preset), saved in `docs/lighthouse/`.
+- [x] **Step 25 · README, PLAN, REPORT.md, and DEBUG-LOG.md** (at least 3 real bugs: symptom, steps, tool, cause, fix commit, lesson).
   Done when the docs match what was delivered.
 - [ ] **Step 28 · Final QA and submission** before 6 November, 23:59 (Georgia time).
 

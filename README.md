@@ -21,11 +21,13 @@ Login is simulated in the browser, so any username and a password of at least 6 
 - [x] Login with a controlled form and required validation; the username lives in `AuthContext`, and Log out returns to the catalog
 - [x] Checkout guard: guests who open `/checkout` go to `/login` and come back after logging in
 - [x] Catalog: the first 12 products from `GET /products` in a responsive grid of product cards (1, 2, 3, or 4 columns by screen width), with loading, error, and empty states; each card shows the discounted price, the original price, the discount, and the rating, and opens its product page
-- [ ] Product details from `GET /products/:id` with Add to Cart
-- [ ] Cart with quantity, remove, and totals, shared through `CartContext`, plus Add to cart on the catalog cards
-- [ ] Checkout form and local order confirmation
-- [ ] Error Boundary
+- [x] Product details from `GET /products/:id`: photo gallery, stock status, a quantity stepper that stops at the stock, and Add to cart; unknown IDs show the 404 page
+- [x] Cart shared through `CartContext` and saved in localStorage (`shop_cart`): Add to cart on the catalog cards, a count badge in the header, and a cart page with quantity, remove, clear cart, subtotal, and total
+- [x] Checkout form with Full name, Email, Address, and City and the assignment's error messages. Place order is disabled for a moment, then shows "Thank you! Your order has been placed." with the order total, and empties the cart
+- [x] Error Boundary with the fallback "Something went wrong." and a Reload button
+- [x] oxlint fails on `any` and warns about missing hook dependencies
 - [x] Deploy on Vercel with an SPA rewrite (`vercel.json`), so links like `/products/5` open directly and on refresh
+- [x] Docs: this README, [PLAN.md](PLAN.md), [REPORT.md](REPORT.md), [DEBUG-LOG.md](DEBUG-LOG.md), and a Lighthouse report of the live site (Mobile) in [`docs/lighthouse/`](docs/lighthouse/)
 
 ### FULL and extras
 
@@ -48,27 +50,35 @@ Login is simulated in the browser, so any username and a password of at least 6 
 
 ```text
 src/
-├── App.tsx            BrowserRouter > AuthProvider > AppRoutes
+├── App.tsx            ErrorBoundary > BrowserRouter > AuthProvider > CartProvider > AppRoutes
 ├── main.tsx           React root
 ├── index.css          Tailwind import, @theme tokens, base styles
-├── api/               products (fetchProducts)
+├── api/               products (fetchProducts, fetchProduct)
 ├── components/
 │   ├── auth/          LoginForm
+│   ├── cart/          CartItemRow, CartSummary
+│   ├── checkout/      CheckoutForm, OrderConfirmation
 │   ├── home/          Hero, Showcase
-│   ├── layout/        Layout, Header, Footer, ScrollToTop
-│   ├── product/       ProductCard, ProductGrid
-│   └── ui/            Container, Eyebrow, PageHeader, StatusMessage, TextField, GhvinolaWordmark, GeorgiaMapIcon
-├── context/           AuthContext (the context and its type), AuthProvider (the state)
-├── hooks/             useAuth, useHeaderScroll, useSmoothScroll
+│   ├── layout/        Layout, Header, Footer, ScrollToTop, ErrorBoundary
+│   ├── product/       ProductCard, ProductGrid, ProductDetails, StockStatus
+│   └── ui/            Container, Eyebrow, PageHeader, StatusMessage, TextField, QuantityStepper, GhvinolaWordmark, GeorgiaMapIcon
+├── context/           AuthContext and CartContext (the contexts and their types), AuthProvider and CartProvider (the state)
+├── hooks/             useAuth, useCart, useHeaderScroll, useSmoothScroll
 ├── pages/             CatalogPage, ProductPage, CartPage, CheckoutPage, LoginPage, NotFoundPage
 ├── routes/            AppRoutes, ProtectedRoute
 ├── types/             product, cart, user, checkout
-└── utils/             validation, format (formatPrice, discountedPrice)
+└── utils/             validation (login, checkout), format (formatPrice, discountedPrice), cart (line totals, subtotal, item count)
 ```
 
-`App` wraps everything in `BrowserRouter` and `AuthProvider`, and `AppRoutes` renders every page inside one `Layout` (header, page, footer). Components read shared state through hooks such as `useAuth`. A user action calls a context function like `login` or `logout`, which replaces the state with a new object, and React re-renders every component that reads it. `ProtectedRoute` sends guests from `/checkout` to `/login` with the original path in router state, and the login page navigates back there after a successful login.
+`App` wraps everything in an `ErrorBoundary`, `BrowserRouter`, `AuthProvider`, and `CartProvider`, and `AppRoutes` renders every page inside one `Layout` (header, page, footer). Components read shared state through hooks such as `useAuth` and `useCart`. A user action calls a context function like `login`, `logout`, or `addItem`, which replaces the state with a new value, and React re-renders every component that reads it. `ProtectedRoute` sends guests from `/checkout` to `/login` with the original path in router state, and the login page navigates back there after a successful login.
 
 `CatalogPage` loads products in a `useEffect` through `fetchProducts` in `src/api/`, keeps them in `useState` together with loading and error state, and renders a message for each state. It passes the products as props to `ProductGrid`, which maps each one to a `ProductCard` keyed by `product.id`. The card's title link stretches over the whole card, so clicking anywhere on a card opens `/products/:id`.
+
+`ProductPage` reads the id with `useParams` and loads the product with `fetchProduct`; when DummyJSON answers 404 it shows the 404 page. `ProductDetails` keeps the chosen photo and quantity in `useState` and adds them with `addItem` from `useCart`.
+
+`CartProvider` keeps the cart items in `useState`. It loads them from `shop_cart` in localStorage when the app starts, checking each saved item with a type guard, and saves them after every change. `addItem`, `setQuantity`, `removeItem`, and `clearCart` always build a new array with `map`, `filter`, or spread instead of changing the old one, and never go past the stock. The item count and totals are computed from the items on every render, so the header badge, the cart page, and checkout always agree.
+
+`CheckoutPage` sends an empty cart back to `/cart`. After Place order it keeps a copy of the order in state, empties the cart, and shows the confirmation from that copy. An `ErrorBoundary` around each page (with a new `key` per path, so it resets when you navigate) and one around the whole app show "Something went wrong." and a Reload button instead of a blank screen.
 
 ## How to run
 
@@ -93,15 +103,18 @@ Then open http://localhost:5173.
 | `npm run typecheck` | Runs the TypeScript compiler without emitting files (`tsc -b`) |
 | `npm run lint` | Lints the code with oxlint |
 
-## Results so far
+## Results
 
 - `typecheck`: 0 errors. `lint`: 0 warnings.
-- Production bundle: 91 kB of JavaScript and 6 kB of CSS (gzip).
-- Tested in Chrome at 375px and desktop widths: no horizontal scroll, tap targets at least 44px.
+- Lighthouse (Mobile) on the live home page: Performance 95, Accessibility 100, Best Practices 100, SEO 100. The reports are in [`docs/lighthouse/`](docs/lighthouse/).
+- Production bundle: 96 kB of JavaScript and 7 kB of CSS (gzip).
+- Tested in Chrome at 375px and desktop widths, including the whole path from a product to the order confirmation: no horizontal scroll, tap targets at least 44px.
 
 ## Limitations
 
 - Login is a local simulation with no real accounts, and it resets when the page reloads (the assignment allows this).
+- Checkout is a local simulation too: no order is sent anywhere, and the confirmation is gone once you leave the page.
+- The cart is saved only in this browser (localStorage).
 - The catalog shows the first 12 of DummyJSON's 194 products. Search, categories, sorting, and pagination are optional FULL features (PRD step 9).
 - DummyJSON has no wine or chocolate, so the catalog shows DummyJSON's general products; our wine and Chocola chocolate appear only in the home page showcase.
 - Smooth scrolling only changes mouse-wheel scrolling; keyboard, touch, and scrollbar scrolling stay native.
