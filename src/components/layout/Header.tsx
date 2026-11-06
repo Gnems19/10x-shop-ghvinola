@@ -1,6 +1,7 @@
 import { startTransition, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
+import useHeaderScroll from '../../hooks/useHeaderScroll'
 import Container from '../ui/Container'
 import GhvinolaWordmark from '../ui/GhvinolaWordmark'
 
@@ -28,7 +29,15 @@ const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { isLoggedIn, logout } = useAuth()
+  const { isAtTop, isHidden } = useHeaderScroll()
+  const { pathname } = useLocation()
   const navigate = useNavigate()
+
+  // The home hero runs up under the header, so only there does the header start see-through.
+  // Elsewhere the background must not fade in, or the cream text would flash over the cream page.
+  const isHome = pathname === '/'
+  const isClear = isHome && isAtTop && !isMenuOpen
+  const isTucked = isHidden && !isMenuOpen
 
   const closeMenu = () => setIsMenuOpen(false)
 
@@ -43,7 +52,11 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-wine-900 text-cream">
+    <header
+      className={`top-0 z-50 text-cream duration-700 ease-[cubic-bezier(0.45,0,0.2,1)] has-[:focus-visible]:translate-y-0 motion-reduce:transition-none ${
+        isHome ? 'fixed inset-x-0 transition-[translate,background-color]' : 'sticky transition-[translate]'
+      } ${isClear ? 'bg-transparent' : 'bg-wine-900'} ${isTucked ? '-translate-y-full' : ''}`}
+    >
       <Container>
         <div className="flex items-center justify-between gap-6 border-b border-cream/25 py-4">
           <Link

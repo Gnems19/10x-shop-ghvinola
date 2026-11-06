@@ -30,7 +30,8 @@ Login is simulated in the browser, so any username and a password of at least 6 
 ### FULL and extras
 
 - [x] Wine color palette as Tailwind `@theme` tokens
-- [x] Custom hooks: `useAuth`, and `useSmoothScroll` for smooth mouse-wheel scrolling without a library (off when the user prefers reduced motion)
+- [x] Custom hooks: `useAuth`; `useSmoothScroll` for smooth mouse-wheel scrolling without a library (off when the user prefers reduced motion); and `useHeaderScroll`, which hides the header while you scroll down and brings it back when you scroll up
+- [x] Home hero with a looping grape-harvest video (a still image when the user prefers reduced motion). On large screens it stays pinned while the page slides up over it, and the header starts see-through over it and turns wine-colored once you scroll.
 - [x] Georgia map icon with the Imereti region around Kutaisi highlighted
 
 ## Tech stack
@@ -58,7 +59,7 @@ src/
 │   ├── product/       ProductCard, ProductGrid
 │   └── ui/            Container, Eyebrow, PageHeader, StatusMessage, TextField, GhvinolaWordmark, GeorgiaMapIcon
 ├── context/           AuthContext (the context and its type), AuthProvider (the state)
-├── hooks/             useAuth, useSmoothScroll
+├── hooks/             useAuth, useHeaderScroll, useSmoothScroll
 ├── pages/             CatalogPage, ProductPage, CartPage, CheckoutPage, LoginPage, NotFoundPage
 ├── routes/            AppRoutes, ProtectedRoute
 ├── types/             product, cart, user, checkout
@@ -102,7 +103,7 @@ Then open http://localhost:5173.
 
 - Login is a local simulation with no real accounts, and it resets when the page reloads (the assignment allows this).
 - The catalog shows the first 12 of DummyJSON's 194 products. Search, categories, sorting, and pagination are optional FULL features (PRD step 9).
-- DummyJSON has no wine or chocolate, so the catalog shows DummyJSON's general products; the home page boxes are placeholders for our own wine and Chocola photos.
+- DummyJSON has no wine or chocolate, so the catalog shows DummyJSON's general products; our wine and Chocola chocolate appear only in the home page showcase.
 - Smooth scrolling only changes mouse-wheel scrolling; keyboard, touch, and scrollbar scrolling stay native.
 
 ## Credits
@@ -110,6 +111,7 @@ Then open http://localhost:5173.
 - Product data: [DummyJSON](https://dummyjson.com/)
 - Design inspiration: [King River](https://kingriver.com.au/)
 - Chocolate partner: [Chocola](https://chocola.ge/)
+- Hero video: vineyard clips from [Pexels](https://www.pexels.com/) (free to use under the Pexels license)
 - Map borders: [Natural Earth](https://www.naturalearthdata.com/) (public domain)
 - Fonts: EB Garamond and Montserrat from [Google Fonts](https://fonts.google.com/)
 - Built with help from AI coding assistants in Cursor

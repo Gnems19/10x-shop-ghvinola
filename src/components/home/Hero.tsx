@@ -22,7 +22,7 @@ export default function Hero() {
   const motionOk = useMotionOk()
 
   return (
-    <section className="relative flex min-h-[calc(100svh-5.25rem)] flex-col overflow-hidden text-cream">
+    <section className="relative flex min-h-svh flex-col overflow-hidden text-cream lg:sticky lg:top-0">
       <img src="/hero-poster.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
       {motionOk && (
         <video
@@ -39,9 +39,10 @@ export default function Hero() {
       )}
       <div className="absolute inset-0 bg-wine-950/20" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(38,7,15,0.5),transparent_70%)]" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-wine-950/60 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-wine-950/75 to-transparent" />
 
-      <Container className="relative z-10 flex flex-1 flex-col">
+      <Container className="relative z-10 flex flex-1 flex-col pt-19 md:pt-21">
         <div className="flex flex-1 flex-col items-center justify-center gap-10 py-16 text-center">
           <h1>
             <GhvinolaWordmark className="h-auto w-[min(78vw,44rem)]" />

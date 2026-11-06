@@ -39,25 +39,28 @@ export default function CatalogPage() {
   return (
     <>
       <Hero />
-      <Showcase />
-      <section id="catalog" className="scroll-mt-24 py-20 lg:py-32">
-        <Container>
-          <PageHeader eyebrow="Shop" title="Catalog" as="h2">
-            {products.length > 0 && (
-              <p className="font-sans text-xs font-bold tracking-widest text-wine-950/60 uppercase">
-                Showing 1–{products.length} of {total}
-              </p>
-            )}
-          </PageHeader>
+      {/* Positioned and opaque so it slides over the hero, which stays pinned on large screens. */}
+      <div className="relative z-10">
+        <Showcase />
+        <section id="catalog" className="scroll-mt-24 bg-cream py-20 lg:py-32">
+          <Container>
+            <PageHeader eyebrow="Shop" title="Catalog" as="h2">
+              {products.length > 0 && (
+                <p className="font-sans text-xs font-bold tracking-widest text-wine-950/60 uppercase">
+                  Showing 1–{products.length} of {total}
+                </p>
+              )}
+            </PageHeader>
 
-          <div className="mt-10">
-            {isLoading && <StatusMessage role="status">Loading products…</StatusMessage>}
-            {error && <StatusMessage role="alert">{error}</StatusMessage>}
-            {!isLoading && !error && products.length === 0 && <StatusMessage>No products found.</StatusMessage>}
-            {products.length > 0 && <ProductGrid products={products} />}
-          </div>
-        </Container>
-      </section>
+            <div className="mt-10">
+              {isLoading && <StatusMessage role="status">Loading products…</StatusMessage>}
+              {error && <StatusMessage role="alert">{error}</StatusMessage>}
+              {!isLoading && !error && products.length === 0 && <StatusMessage>No products found.</StatusMessage>}
+              {products.length > 0 && <ProductGrid products={products} />}
+            </div>
+          </Container>
+        </section>
+      </div>
     </>
   )
 }
