@@ -114,6 +114,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 - [ ] Step 17 · Reviews, related products, promo code
 - [ ] Step 18 · Orders, Profile, Formik + Yup login
 - [ ] Step 26 · Lazy routes and images, Lighthouse before/after
+- [ ] Own wine and chocolate catalog (not in the PRD): a Cloudflare Worker with a D1 database that answers the same URLs and JSON as DummyJSON, with our wines (the Saperavi bottle render for now) and Chocola's chocolates (photos from cdn.chocola.ge). The app reads `VITE_API_URL` and falls back to `https://dummyjson.com`.
 
 ## Risks
 
@@ -122,7 +123,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 | Deadline: the repo is due 6 November at 23:59 (Georgia time) | CORE steps in PRD order, commit and push after each step, deploy early |
 | DummyJSON is down or slow | Every request has loading and error states with a clear message; the Error Boundary catches crashes |
 | Refreshing `/products/5` returns 404 after deploy | SPA rewrite in the host config, tested on the live link |
-| DummyJSON has no wine or chocolate | The catalog uses DummyJSON as required; the home showcase holds our own wine and Chocola photos |
+| DummyJSON has no wine or chocolate (its search finds none) | The catalog uses DummyJSON as required; the home showcase holds our own wine and Chocola photos. If time is left after CORE, our own Worker serves wine and chocolate through the same API |
 
 ## Definition of Done (every task)
 
