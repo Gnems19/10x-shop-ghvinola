@@ -6,9 +6,11 @@ import ProductGrid from '../components/product/ProductGrid'
 import Container from '../components/ui/Container'
 import PageHeader from '../components/ui/PageHeader'
 import StatusMessage from '../components/ui/StatusMessage'
+import useCart from '../hooks/useCart'
 import type { Product } from '../types/product'
 
 export default function CatalogPage() {
+  const { addItem } = useCart()
   const [products, setProducts] = useState<Product[]>([])
   const [total, setTotal] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
@@ -56,7 +58,7 @@ export default function CatalogPage() {
               {isLoading && <StatusMessage role="status">Loading products…</StatusMessage>}
               {error && <StatusMessage role="alert">{error}</StatusMessage>}
               {!isLoading && !error && products.length === 0 && <StatusMessage>No products found.</StatusMessage>}
-              {products.length > 0 && <ProductGrid products={products} />}
+              {products.length > 0 && <ProductGrid products={products} onAdd={(product) => addItem(product, 1)} />}
             </div>
           </Container>
         </section>

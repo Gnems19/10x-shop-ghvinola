@@ -1,6 +1,7 @@
 import { startTransition, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
+import useCart from '../../hooks/useCart'
 import useHeaderScroll from '../../hooks/useHeaderScroll'
 import Container from '../ui/Container'
 import GhvinolaWordmark from '../ui/GhvinolaWordmark'
@@ -26,9 +27,23 @@ const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive ? 'text-wine-300' : ''
   }`
 
+interface CartBadgeProps {
+  count: number
+}
+
+function CartBadge({ count }: CartBadgeProps) {
+  return (
+    <span className="ml-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-wine-300 px-1.5 font-sans text-[0.6875rem] font-bold text-wine-950">
+      {count}
+      <span className="sr-only">{count === 1 ? ' item' : ' items'}</span>
+    </span>
+  )
+}
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { isLoggedIn, logout } = useAuth()
+  const { itemCount } = useCart()
   const { headerRef, isAtTop } = useHeaderScroll(isMenuOpen)
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -76,6 +91,7 @@ export default function Header() {
                 <li key={item.to}>
                   <NavLink to={item.to} end={item.end} className={desktopLinkClass}>
                     {item.label}
+                    {item.to === '/cart' && itemCount > 0 && <CartBadge count={itemCount} />}
                   </NavLink>
                 </li>
               ))}
@@ -127,6 +143,7 @@ export default function Header() {
                 <li key={item.to}>
                   <NavLink to={item.to} end={item.end} onClick={closeMenu} className={mobileLinkClass}>
                     {item.label}
+                    {item.to === '/cart' && itemCount > 0 && <CartBadge count={itemCount} />}
                   </NavLink>
                 </li>
               ))}

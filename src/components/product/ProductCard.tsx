@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Product } from '../../types/product'
 import { discountedPrice, formatPrice } from '../../utils/format'
@@ -5,12 +6,30 @@ import Eyebrow from '../ui/Eyebrow'
 
 interface ProductCardProps {
   product: Product
+  onAdd: (product: Product) => boolean
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+type AddFeedback = 'added' | 'no-more' | null
+
+export default function ProductCard({ product, onAdd }: ProductCardProps) {
+  const [feedback, setFeedback] = useState<AddFeedback>(null)
   const price = discountedPrice(product.price, product.discountPercentage)
   const hasDiscount = product.discountPercentage >= 1
   const category = product.category.replaceAll('-', ' ')
+  const isOutOfStock = product.stock === 0
+
+  useEffect(() => {
+    if (!feedback) return
+    const timer = setTimeout(() => setFeedback(null), 2000)
+    return () => clearTimeout(timer)
+  }, [feedback])
+
+  const handleAdd = () => setFeedback(onAdd(product) ? 'added' : 'no-more')
+
+  let buttonLabel = 'Add to cart'
+  if (isOutOfStock) buttonLabel = 'Out of stock'
+  else if (feedback === 'added') buttonLabel = 'Added ✓'
+  else if (feedback === 'no-more') buttonLabel = 'No more in stock'
 
   return (
     <article className="group relative flex h-full flex-col">
@@ -59,6 +78,22 @@ export default function ProductCard({ product }: ProductCardProps) {
           </>
         )}
       </p>
+
+      {/* Sits above the title link, which stretches over the whole card. */}
+      <div className="relative z-10 mt-auto pt-5">
+        <button
+          type="button"
+          onClick={handleAdd}
+          disabled={isOutOfStock}
+          className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center border border-wine-700 px-4 font-sans text-xs font-bold tracking-widest text-wine-700 uppercase transition-colors hover:bg-wine-700 hover:text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wine-700 disabled:cursor-not-allowed disabled:border-wine-900/20 disabled:text-wine-950/40 disabled:hover:bg-transparent"
+        >
+          {buttonLabel}
+        </button>
+        <p role="status" className="sr-only">
+          {feedback === 'added' && `${product.title} added to cart`}
+          {feedback === 'no-more' && `Your cart already holds all ${product.stock} of ${product.title}`}
+        </p>
+      </div>
     </article>
   )
 }
