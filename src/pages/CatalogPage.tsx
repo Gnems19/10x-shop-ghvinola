@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { fetchProducts } from '../api/products'
 import Hero from '../components/home/Hero'
 import Showcase from '../components/home/Showcase'
+import ProductGrid from '../components/product/ProductGrid'
 import Container from '../components/ui/Container'
 import PageHeader from '../components/ui/PageHeader'
 import StatusMessage from '../components/ui/StatusMessage'
@@ -53,15 +54,7 @@ export default function CatalogPage() {
             {isLoading && <StatusMessage role="status">Loading products…</StatusMessage>}
             {error && <StatusMessage role="alert">{error}</StatusMessage>}
             {!isLoading && !error && products.length === 0 && <StatusMessage>No products found.</StatusMessage>}
-            {products.length > 0 && (
-              <ul className="divide-y divide-wine-900/15 text-lg">
-                {products.map((product) => (
-                  <li key={product.id} className="py-3">
-                    {product.title}
-                  </li>
-                ))}
-              </ul>
-            )}
+            {products.length > 0 && <ProductGrid products={products} />}
           </div>
         </Container>
       </section>

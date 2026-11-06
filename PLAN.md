@@ -58,7 +58,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 
 - [x] **Step 7 · Load products** with `GET /products?limit=12&skip=0` in `useEffect`, with loading, error, and empty states.
   Done when API products appear and each state shows a clear message.
-- [ ] **Step 8 · ProductCard and ProductGrid** with props, `map()` with stable keys, and a responsive grid (1 / 2–3 / 4 columns).
+- [x] **Step 8 · ProductCard and ProductGrid** with props, `map()` with stable keys, and a responsive grid (1 / 2–3 / 4 columns).
   Done when clicking a card opens its product page.
 
 ### Product (~1.5 h)
@@ -70,10 +70,10 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 
 ### Cart (~1.5 h)
 
-- [ ] **Step 12 · CartContext** with add, remove, and setQuantity as immutable updates (optionally saved to `shop_cart` in localStorage).
+- [ ] **Step 12 · CartContext** with add, remove, and setQuantity as immutable updates (optionally saved to `shop_cart` in localStorage), plus the Add to cart button on catalog cards that the appendix lists as CORE.
   Done when the header badge and the cart page always show the same items.
 - [ ] **Step 13 · Cart page** with the item list, quantity, remove, subtotal, and total.
-  Done when changes update the total and an empty cart reads "Your cart is empty."
+  Done when changes update the total, prices match the discounted prices on the cards (`discountedPrice` in `utils/format.ts`), and an empty cart reads "Your cart is empty."
 
 ### Checkout (~1 h)
 
