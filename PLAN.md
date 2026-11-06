@@ -96,7 +96,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 
 ### Docs and deploy (~1.5 h)
 
-- [ ] **Step 24 · Deploy to Vercel** with an SPA rewrite.
+- [x] **Step 24 · Deploy to Vercel** with an SPA rewrite.
   Done when the live link works, `/products/5` opens on refresh, and the link is in the README.
 - [ ] **Lighthouse report** of the live site (Mobile preset), saved in `docs/lighthouse/`.
 - [ ] **Step 25 · README, PLAN, REPORT.md, and DEBUG-LOG.md** (at least 3 real bugs: symptom, steps, tool, cause, fix commit, lesson).

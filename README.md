@@ -4,7 +4,7 @@ Graduation project for 10X Front-end: an online shop single-page app built with 
 
 ## Live demo
 
-Coming soon: the Vercel link will be added here after the first deploy.
+[10x-shop-ghvinola.vercel.app](https://10x-shop-ghvinola.vercel.app), deployed on Vercel from `main` on every push.
 
 ## Test account
 
@@ -25,7 +25,7 @@ Login is simulated in the browser, so any username and a password of at least 6 
 - [ ] Cart with quantity, remove, and totals, shared through `CartContext`, plus Add to cart on the catalog cards
 - [ ] Checkout form and local order confirmation
 - [ ] Error Boundary
-- [ ] Deploy on Vercel
+- [x] Deploy on Vercel with an SPA rewrite (`vercel.json`), so links like `/products/5` open directly and on refresh
 
 ### FULL and extras
 
