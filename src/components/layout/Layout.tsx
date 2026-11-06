@@ -1,10 +1,12 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import useSmoothScroll from '../../hooks/useSmoothScroll'
+import ErrorBoundary from './ErrorBoundary'
 import Footer from './Footer'
 import Header from './Header'
 import ScrollToTop from './ScrollToTop'
 
 export default function Layout() {
+  const { pathname } = useLocation()
   useSmoothScroll()
 
   return (
@@ -18,7 +20,10 @@ export default function Layout() {
       </a>
       <Header />
       <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
-        <Outlet />
+        {/* A new key per page clears a caught error once the user navigates away. */}
+        <ErrorBoundary key={pathname}>
+          <Outlet />
+        </ErrorBoundary>
       </main>
       <Footer />
     </div>
