@@ -56,7 +56,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 
 ### Catalog (~1.5 h)
 
-- [ ] **Step 7 · Load products** with `GET /products?limit=12&skip=0` in `useEffect`, with loading, error, and empty states.
+- [x] **Step 7 · Load products** with `GET /products?limit=12&skip=0` in `useEffect`, with loading, error, and empty states.
   Done when API products appear and each state shows a clear message.
 - [ ] **Step 8 · ProductCard and ProductGrid** with props, `map()` with stable keys, and a responsive grid (1 / 2–3 / 4 columns).
   Done when clicking a card opens its product page.

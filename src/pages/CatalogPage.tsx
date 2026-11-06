@@ -1,19 +1,68 @@
+import { useEffect, useState } from 'react'
+import { fetchProducts } from '../api/products'
 import Hero from '../components/home/Hero'
 import Showcase from '../components/home/Showcase'
 import Container from '../components/ui/Container'
 import PageHeader from '../components/ui/PageHeader'
+import StatusMessage from '../components/ui/StatusMessage'
+import type { Product } from '../types/product'
 
 export default function CatalogPage() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [total, setTotal] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Drops a late response after unmount, or from the first run when StrictMode runs effects twice.
+    let ignore = false
+
+    fetchProducts()
+      .then((data) => {
+        if (ignore) return
+        setProducts(data.products)
+        setTotal(data.total)
+      })
+      .catch(() => {
+        if (!ignore) setError("We couldn't load the products. Check your connection and refresh the page.")
+      })
+      .finally(() => {
+        if (!ignore) setIsLoading(false)
+      })
+
+    return () => {
+      ignore = true
+    }
+  }, [])
+
   return (
     <>
       <Hero />
       <Showcase />
       <section id="catalog" className="scroll-mt-24 py-20 lg:py-32">
         <Container>
-          <PageHeader eyebrow="Shop" title="Catalog" as="h2" />
-          <p className="mt-10 rounded-sm border border-dashed border-wine-900/20 px-6 py-16 text-center text-lg text-wine-950/60">
-            Products will appear here.
-          </p>
+          <PageHeader eyebrow="Shop" title="Catalog" as="h2">
+            {products.length > 0 && (
+              <p className="font-sans text-xs font-bold tracking-widest text-wine-950/60 uppercase">
+                Showing 1–{products.length} of {total}
+              </p>
+            )}
+          </PageHeader>
+
+          <div className="mt-10">
+            {isLoading && <StatusMessage role="status">Loading products…</StatusMessage>}
+            {error && <StatusMessage role="alert">{error}</StatusMessage>}
+            {!isLoading && !error && products.length === 0 && <StatusMessage>No products found.</StatusMessage>}
+            {products.length > 0 && (
+              <ul className="divide-y divide-wine-900/15 text-lg">
+                {products.map((product) => (
+                  <li key={product.id} className="py-3">
+                    {product.title}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </Container>
       </section>
     </>
