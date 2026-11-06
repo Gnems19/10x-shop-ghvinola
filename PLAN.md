@@ -25,7 +25,7 @@ Not planned until CORE is finished: search / category / sort / pagination, Order
 - Ghvinola wordmark in the header. Showcase boxes on the home page are reserved for wine bottle and Chocola chocolate photos; catalog, product, and cart data stay on DummyJSON as the assignment requires.
 - The hero's location line reads "Kutaisi, Georgia" next to a small outline of Georgia with the Imereti region (around Kutaisi) filled in, like King River's Queensland icon. The borders come from public-domain Natural Earth data, simplified into `GeorgiaMapIcon`.
 - Smooth mouse-wheel scrolling like King River's (they use the Lenis library). Ours is a small custom hook, `useSmoothScroll`, because the assignment does not allow extra libraries. It turns off when the user prefers reduced motion; keyboard, touch, and scrollbar scrolling stay native.
-- Hero scroll like King River's: on large screens the hero video stays pinned (`position: sticky`) while the page slides up over it and covers the "Kutaisi, Georgia" line. The header starts see-through over the hero, turns wine-colored once you scroll, hides while you scroll down, and returns when you scroll up. `useHeaderScroll` uses the same thresholds and easing as the Chocola site's header.
+- Hero scroll like King River's: on large screens the hero video stays pinned (`position: sticky`) while the page slides up over it and covers the "Kutaisi, Georgia" line. The header starts see-through over the hero and turns wine-colored once you scroll. Like King River's, scrolling down pushes it up exactly as far as the page moves, and after 20px of scrolling up it slides back in on its own (`useHeaderScroll`).
 
 ## Three-week stages
 

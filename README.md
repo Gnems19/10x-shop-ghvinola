@@ -30,7 +30,7 @@ Login is simulated in the browser, so any username and a password of at least 6 
 ### FULL and extras
 
 - [x] Wine color palette as Tailwind `@theme` tokens
-- [x] Custom hooks: `useAuth`; `useSmoothScroll` for smooth mouse-wheel scrolling without a library (off when the user prefers reduced motion); and `useHeaderScroll`, which hides the header while you scroll down and brings it back when you scroll up
+- [x] Custom hooks: `useAuth`; `useSmoothScroll` for smooth mouse-wheel scrolling without a library (off when the user prefers reduced motion); and `useHeaderScroll`, which moves the header up with the page as you scroll down and slides it back in when you scroll up
 - [x] Home hero with a looping grape-harvest video (a still image when the user prefers reduced motion). On large screens it stays pinned while the page slides up over it, and the header starts see-through over it and turns wine-colored once you scroll.
 - [x] Georgia map icon with the Imereti region around Kutaisi highlighted
 
