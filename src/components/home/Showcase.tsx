@@ -1,10 +1,13 @@
-import chocolateBoxLarge from '../../assets/showcase/chocolate-box-1800.webp'
-import chocolateBoxSmall from '../../assets/showcase/chocolate-box-900.webp'
-import wineBottleLarge from '../../assets/showcase/wine-bottle-1800.webp'
-import wineBottleSmall from '../../assets/showcase/wine-bottle-900.webp'
+import chocolateBoxLarge from '../../assets/showcase/gift-box-chocolate-1800.webp'
+import chocolateBoxSmall from '../../assets/showcase/gift-box-chocolate-900.webp'
+import pairBoxLarge from '../../assets/showcase/gift-box-pair-1800.webp'
+import pairBoxSmall from '../../assets/showcase/gift-box-pair-900.webp'
+import wineBoxLarge from '../../assets/showcase/gift-box-wine-1800.webp'
+import wineBoxSmall from '../../assets/showcase/gift-box-wine-900.webp'
 import Container from '../ui/Container'
 
-// Rendered in Blender at 3:2 and saved as WebP at 900 and 1800 px wide.
+// The open gift boxes, rendered in Blender at 3:2 and saved as WebP at 900 and 1800 px wide.
+// Their background is baked in as the section's wine-900, so the boxes float on it with no visible edge.
 interface ShowcaseImage {
   small: string
   large: string
@@ -31,9 +34,20 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     byline: 'by Ghvinola',
     description: 'Our own wines, bottled for long dinners and good company.',
     image: {
-      small: wineBottleSmall,
-      large: wineBottleLarge,
-      alt: 'A bottle of Ghvinola Saperavi red wine with a cream and gold label',
+      small: wineBoxSmall,
+      large: wineBoxLarge,
+      alt: 'An open claret gift box with a bottle of Ghvinola Saperavi lying on cream satin',
+    },
+  },
+  {
+    id: 'pair',
+    title: 'Wine & Chocolate',
+    byline: 'Gift box',
+    description: 'A bottle of our wine and six Chocola chocolates, packed together as a gift.',
+    image: {
+      small: pairBoxSmall,
+      large: pairBoxLarge,
+      alt: 'An open cream gift box with a bottle of Ghvinola Saperavi and six Chocola chocolates on wine red velvet',
     },
   },
   {
@@ -44,14 +58,14 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     image: {
       small: chocolateBoxSmall,
       large: chocolateBoxLarge,
-      alt: 'An open box of twelve chocolates topped with almonds, pistachios and berries',
+      alt: 'An open kraft paper box of twelve Chocola chocolates topped with almonds, pistachios and berries',
     },
   },
 ]
 
 function ShowcaseRow({ item, isReversed }: ShowcaseRowProps) {
   return (
-    <article className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-x-8">
+    <article className="grid gap-6 lg:grid-cols-12 lg:items-center lg:gap-x-8">
       <div
         className={`lg:col-span-4 lg:row-start-1 xl:col-span-3 ${
           isReversed ? 'lg:col-start-9 xl:col-start-10' : 'lg:col-start-1'
@@ -74,7 +88,7 @@ function ShowcaseRow({ item, isReversed }: ShowcaseRowProps) {
         loading="lazy"
         decoding="async"
         alt={item.image.alt}
-        className={`order-first aspect-[3/2] w-full rounded-sm border border-cream/15 bg-wine-950 lg:order-none lg:col-span-7 lg:row-start-1 xl:col-span-6 ${
+        className={`order-first aspect-[3/2] w-full lg:order-none lg:col-span-7 lg:row-start-1 xl:col-span-6 ${
           isReversed ? 'lg:col-start-1' : 'lg:col-start-6 xl:col-start-7'
         }`}
       />
@@ -84,8 +98,8 @@ function ShowcaseRow({ item, isReversed }: ShowcaseRowProps) {
 
 export default function Showcase() {
   return (
-    <section aria-label="Our range" className="bg-wine-900 py-24 text-cream lg:py-40">
-      <Container className="space-y-24 lg:space-y-40">
+    <section aria-label="Our range" className="bg-wine-900 py-24 text-cream lg:py-32">
+      <Container className="space-y-20 lg:space-y-28">
         {SHOWCASE_ITEMS.map((item, index) => (
           <ShowcaseRow key={item.id} item={item} isReversed={index % 2 === 1} />
         ))}

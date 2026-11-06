@@ -22,10 +22,12 @@ Not planned until CORE is finished: search / category / sort / pagination, Order
 
 - Layout and proportions inspired by [King River](https://kingriver.com.au/): full-bleed hero, 1600px container, thin hairline dividers, serif body text with small uppercase sans-serif labels.
 - Wine palette (oxblood, claret, rosé, cream) defined as Tailwind `@theme` tokens in `src/index.css`.
-- Ghvinola wordmark in the header. Showcase boxes on the home page are reserved for wine bottle and Chocola chocolate photos; catalog, product, and cart data stay on DummyJSON as the assignment requires.
+- Ghvinola logo in the header. On the home page it is only the ღ icon with its grape bunch while the hero's big wordmark is on screen, so the name isn't there twice, and it unrolls into the full wordmark once the hero wordmark is out of sight (`useHeroLogoInSight`). The home page showcase holds our wine and Chocola chocolate as three gift boxes; catalog, product, and cart data stay on DummyJSON as the assignment requires.
 - The hero's location line reads "Kutaisi, Georgia" next to a small outline of Georgia with the Imereti region (around Kutaisi) filled in, like King River's Queensland icon. The borders come from public-domain Natural Earth data, simplified into `GeorgiaMapIcon`.
 - Smooth mouse-wheel scrolling like King River's (they use the Lenis library). Ours is a small custom hook, `useSmoothScroll`, because the assignment does not allow extra libraries. It turns off when the user prefers reduced motion; keyboard, touch, and scrollbar scrolling stay native.
 - Hero scroll like King River's: on large screens the hero video stays pinned (`position: sticky`) while the page slides up over it and covers the "Kutaisi, Georgia" line. The header starts see-through over the hero and turns wine-colored once you scroll. Like King River's, scrolling down pushes it up exactly as far as the page moves, and after 20px of scrolling up it slides back in on its own (`useHeaderScroll`).
+- Gift boxes like King River's product boxes: a wine box, a wine and chocolate box, and the Chocola box, modelled and rendered in Blender (King River uses WebGL models, but the assignment allows no 3D library). The showcase shows each box open with what's inside, as still WebP images at 900 and 1800 px wide in `src/assets/showcase/` that load lazily.
+- Plan B, on the `plan-b/gift-boxes` branch: the same boxes in 3D. 48 turntable frames and 20 lid-opening frames per box are played on a `<canvas>`, so a box turns when dragged and opens its lid on click, and then a wine panel slides over the page to the catalog. It was taken off the home page because the 204 frames (about 1.6 MB) made it slow to load.
 
 ## Three-week stages
 
@@ -64,7 +66,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 
 ### Product (~1.5 h)
 
-- [x] **Step 10 · Product details** with `useParams` and `GET /products/:id`.
+- [x] **Step 10 · Product details** with `useParams`. The product is picked out of the catalog list by id, because a DummyJSON custom response has no `/products/:id`.
   Done when title, image, description, price, and stock show, and an unknown ID shows the 404 page instead of crashing.
 - [x] **Step 11 · Photo and quantity choice, Add to Cart.**
   Done when the chosen quantity lands in the shared cart.
@@ -107,7 +109,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 ### Done beyond CORE
 
 - [x] Tailwind `@theme` tokens for the wine palette (step 27).
-- [x] Custom hooks `useAuth`, `useSmoothScroll`, and `useHeaderScroll`.
+- [x] Custom hooks `useAuth`, `useSmoothScroll`, `useHeaderScroll`, and `useHeroLogoInSight`.
 
 ### Optional FULL, only after CORE
 
@@ -115,7 +117,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 - [ ] Step 17 · Reviews, related products, promo code
 - [ ] Step 18 · Orders, Profile, Formik + Yup login
 - [ ] Step 26 · Lazy routes and images, Lighthouse before/after
-- [ ] Own wine and chocolate catalog (not in the PRD): a Cloudflare Worker with a D1 database that answers the same URLs and JSON as DummyJSON, with our wines (the Saperavi bottle render for now) and Chocola's chocolates (photos from cdn.chocola.ge). The app reads `VITE_API_URL` and falls back to `https://dummyjson.com`.
+- [x] Own wine and chocolate catalog (not in the PRD): 12 products in `catalog/products.json` (gift boxes, our wines, and Chocola's chocolates), served as a DummyJSON custom response. Each wine has its own bottle, rendered in Blender from the Saperavi bottle with the wine's name and colours, and all the images are on `cdn.chocola.ge/ghvinola/`.
 
 ## Risks
 
@@ -124,7 +126,8 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 | Deadline: the repo is due 6 November at 23:59 (Georgia time) | CORE steps in PRD order, commit and push after each step, deploy early |
 | DummyJSON is down or slow | Every request has loading and error states with a clear message; the Error Boundary catches crashes |
 | Refreshing `/products/5` returns 404 after deploy | SPA rewrite in the host config, tested on the live link |
-| DummyJSON has no wine or chocolate (its search finds none) | The catalog uses DummyJSON as required; the home showcase holds our own wine and Chocola photos. If time is left after CORE, our own Worker serves wine and chocolate through the same API |
+| DummyJSON has no wine or chocolate (its search finds none) | Our own list of gift boxes, wines, and Chocola chocolates is served by DummyJSON as a custom response, so the catalog still runs on DummyJSON |
+| The custom response expires after 90 days (4 February 2027), and DummyJSON's CDN serves the plain URL only to the first site that loaded it | Republish with `node catalog/publish.mjs` and update `CATALOG_URL`; the app adds its own origin as a query string, so it always gets a copy that allows it |
 
 ## Definition of Done (every task)
 
