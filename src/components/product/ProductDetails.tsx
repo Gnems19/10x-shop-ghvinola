@@ -85,7 +85,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <span className="text-3xl font-bold text-wine-900">{formatPrice(price)}</span>
           {hasDiscount && (
             <>
-              <s className="text-lg text-wine-950/50">
+              <s className="text-lg text-wine-950/70">
                 <span className="sr-only">Original price: </span>
                 {formatPrice(product.price)}
               </s>

@@ -68,7 +68,7 @@ export default function ProductCard({ product, onAdd }: ProductCardProps) {
         <span className="text-base font-bold text-wine-900">{formatPrice(price)}</span>
         {hasDiscount && (
           <>
-            <s className="text-sm text-wine-950/50">
+            <s className="text-sm text-wine-950/70">
               <span className="sr-only">Original price: </span>
               {formatPrice(product.price)}
             </s>
