@@ -1,11 +1,22 @@
+import chocolateBoxLarge from '../../assets/showcase/chocolate-box-1800.webp'
+import chocolateBoxSmall from '../../assets/showcase/chocolate-box-900.webp'
+import wineBottleLarge from '../../assets/showcase/wine-bottle-1800.webp'
+import wineBottleSmall from '../../assets/showcase/wine-bottle-900.webp'
 import Container from '../ui/Container'
+
+// Rendered in Blender at 3:2 and saved as WebP at 900 and 1800 px wide.
+interface ShowcaseImage {
+  small: string
+  large: string
+  alt: string
+}
 
 interface ShowcaseItem {
   id: string
   title: string
   byline: string
   description: string
-  imageLabel: string
+  image: ShowcaseImage
 }
 
 interface ShowcaseRowProps {
@@ -19,14 +30,22 @@ const SHOWCASE_ITEMS: ShowcaseItem[] = [
     title: 'Wine',
     byline: 'by Ghvinola',
     description: 'Our own wines, bottled for long dinners and good company.',
-    imageLabel: 'Wine bottle photo',
+    image: {
+      small: wineBottleSmall,
+      large: wineBottleLarge,
+      alt: 'A bottle of Ghvinola Saperavi red wine with a cream and gold label',
+    },
   },
   {
     id: 'chocolate',
     title: 'Chocolate',
     byline: 'by Chocola',
     description: 'Chocolate from our partners at Chocola, chosen to pair with every bottle.',
-    imageLabel: 'Chocolate photo',
+    image: {
+      small: chocolateBoxSmall,
+      large: chocolateBoxLarge,
+      alt: 'An open box of twelve chocolates topped with almonds, pistachios and berries',
+    },
   },
 ]
 
@@ -45,14 +64,20 @@ function ShowcaseRow({ item, isReversed }: ShowcaseRowProps) {
         <p className="mt-6 text-lg/relaxed text-cream/80">{item.description}</p>
       </div>
 
-      <div
-        aria-hidden="true"
-        className={`order-first grid aspect-[3/2] place-items-center rounded-sm border border-cream/15 bg-linear-to-br from-wine-800 to-wine-950 lg:order-none lg:col-span-7 lg:row-start-1 xl:col-span-6 ${
+      {/* The browser picks the 900 px file on small screens and the 1800 px one on large or high-density screens. */}
+      <img
+        src={item.image.large}
+        srcSet={`${item.image.small} 900w, ${item.image.large} 1800w`}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        width={1800}
+        height={1200}
+        loading="lazy"
+        decoding="async"
+        alt={item.image.alt}
+        className={`order-first aspect-[3/2] w-full rounded-sm border border-cream/15 bg-wine-950 lg:order-none lg:col-span-7 lg:row-start-1 xl:col-span-6 ${
           isReversed ? 'lg:col-start-1' : 'lg:col-start-6 xl:col-start-7'
         }`}
-      >
-        <span className="font-sans text-xs font-bold tracking-widest text-cream/40 uppercase">{item.imageLabel}</span>
-      </div>
+      />
     </article>
   )
 }

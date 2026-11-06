@@ -1,11 +1,47 @@
+import { useEffect, useState } from 'react'
 import Container from '../ui/Container'
 import GeorgiaMapIcon from '../ui/GeorgiaMapIcon'
 import GhvinolaWordmark from '../ui/GhvinolaWordmark'
 
+function useMotionOk() {
+  const [motionOk, setMotionOk] = useState(
+    () => !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setMotionOk(!media.matches)
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
+
+  return motionOk
+}
+
 export default function Hero() {
+  const motionOk = useMotionOk()
+
   return (
-    <section className="flex min-h-[calc(100svh-5.25rem)] flex-col bg-wine-950 bg-radial-[at_50%_35%] from-wine-800 via-wine-900 to-wine-950 text-cream">
-      <Container className="flex flex-1 flex-col">
+    <section className="relative flex min-h-[calc(100svh-5.25rem)] flex-col overflow-hidden text-cream">
+      <img src="/hero-poster.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
+      {motionOk && (
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/hero-poster.jpg"
+          aria-hidden="true"
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
+      )}
+      <div className="absolute inset-0 bg-wine-950/20" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(38,7,15,0.5),transparent_70%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-wine-950/75 to-transparent" />
+
+      <Container className="relative z-10 flex flex-1 flex-col">
         <div className="flex flex-1 flex-col items-center justify-center gap-10 py-16 text-center">
           <h1>
             <GhvinolaWordmark className="h-auto w-[min(78vw,44rem)]" />

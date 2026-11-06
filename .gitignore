@@ -32,5 +32,12 @@ dist-ssr
 
 # Logo design sources, not used by the app
 /.design-work/
+
+# Blender scenes and render scripts for the showcase images. The finished WebP files are in src/assets/showcase/.
+/blender/
+
+# Source footage and local tools. The finished hero file lives in public/.
+/.media/
+/.tools/
 /src/assets/ghvinola*
 ~ai-*.tmp
