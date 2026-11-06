@@ -5,7 +5,7 @@ interface GhvinolaWordmarkProps {
 export default function GhvinolaWordmark({ className = '' }: GhvinolaWordmarkProps) {
   return (
     <svg
-      viewBox="82 88 1066 219"
+      viewBox="76 82 1078 231"
       fill="currentColor"
       fillRule="evenodd"
       role="img"
