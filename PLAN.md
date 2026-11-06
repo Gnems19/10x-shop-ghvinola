@@ -22,10 +22,11 @@ Not planned until CORE is finished: search / category / sort / pagination, Order
 
 - Layout and proportions inspired by [King River](https://kingriver.com.au/): full-bleed hero, 1600px container, thin hairline dividers, serif body text with small uppercase sans-serif labels.
 - Wine palette (oxblood, claret, rosé, cream) defined as Tailwind `@theme` tokens in `src/index.css`.
-- Ghvinola wordmark in the header. Showcase boxes on the home page are reserved for wine bottle and Chocola chocolate photos; catalog, product, and cart data stay on DummyJSON as the assignment requires.
+- Ghvinola logo in the header. On the home page it is only the ღ icon with its grape bunch while the hero's big wordmark is on screen, so the name isn't there twice, and it unrolls into the full wordmark once the hero wordmark is out of sight (`useHeroLogoInSight`). The home page showcase holds our wine and Chocola chocolate as three gift boxes; catalog, product, and cart data stay on DummyJSON as the assignment requires.
 - The hero's location line reads "Kutaisi, Georgia" next to a small outline of Georgia with the Imereti region (around Kutaisi) filled in, like King River's Queensland icon. The borders come from public-domain Natural Earth data, simplified into `GeorgiaMapIcon`.
 - Smooth mouse-wheel scrolling like King River's (they use the Lenis library). Ours is a small custom hook, `useSmoothScroll`, because the assignment does not allow extra libraries. It turns off when the user prefers reduced motion; keyboard, touch, and scrollbar scrolling stay native.
 - Hero scroll like King River's: on large screens the hero video stays pinned (`position: sticky`) while the page slides up over it and covers the "Kutaisi, Georgia" line. The header starts see-through over the hero and turns wine-colored once you scroll. Like King River's, scrolling down pushes it up exactly as far as the page moves, and after 20px of scrolling up it slides back in on its own (`useHeaderScroll`).
+- 3D gift boxes like King River's product boxes: a wine box, a wine and chocolate box, and the Chocola box. King River uses WebGL models; the assignment allows no 3D library, so ours are modelled and rendered in Blender as 48 turntable frames and 20 lid-opening frames each (WebP in `public/showcase/`, about 1.6 MB for all three). `GiftBox` draws the frames on a `<canvas>`: drag to turn, the arrow keys turn it too, and a click or Enter opens the lid. Then `PageTransition` slides a wine panel over the page like King River's page change (Web Animations API), the page jumps to the catalog behind it, and the panel slides away. With reduced motion the box doesn't spin or open, and the click goes straight to the catalog.
 
 ## Three-week stages
 
@@ -106,7 +107,7 @@ Step numbers match the 28 steps in the PRD. Hours are rough estimates for the re
 ### Done beyond CORE
 
 - [x] Tailwind `@theme` tokens for the wine palette (step 27).
-- [x] Custom hooks `useAuth`, `useSmoothScroll`, and `useHeaderScroll`.
+- [x] Custom hooks `useAuth`, `useSmoothScroll`, `useHeaderScroll`, and `useHeroLogoInSight`.
 
 ### Optional FULL, only after CORE
 

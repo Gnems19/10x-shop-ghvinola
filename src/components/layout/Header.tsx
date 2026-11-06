@@ -2,8 +2,9 @@ import { startTransition, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import useHeaderScroll from '../../hooks/useHeaderScroll'
+import useHeroLogoInSight from '../../hooks/useHeroLogoInSight'
 import Container from '../ui/Container'
-import GhvinolaWordmark from '../ui/GhvinolaWordmark'
+import HeaderLogo from './HeaderLogo'
 
 interface NavItem {
   to: string
@@ -29,7 +30,7 @@ const mobileLinkClass = ({ isActive }: { isActive: boolean }) =>
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { isLoggedIn, logout } = useAuth()
-  const { headerRef, isAtTop } = useHeaderScroll(isMenuOpen)
+  const { header, headerRef, isAtTop } = useHeaderScroll(isMenuOpen)
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
@@ -37,6 +38,8 @@ export default function Header() {
   // Elsewhere the background must not fade in, or the cream text would flash over the cream page.
   const isHome = pathname === '/'
   const isClear = isHome && isAtTop && !isMenuOpen
+  // While the hero's big wordmark is on screen the header shows only the ღ icon, so the name isn't there twice.
+  const isHeroLogoInSight = useHeroLogoInSight(header, isHome)
 
   const closeMenu = () => setIsMenuOpen(false)
 
@@ -64,9 +67,9 @@ export default function Header() {
           <Link
             to="/"
             onClick={closeMenu}
-            className="flex items-center transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine-300"
+            className="flex min-h-11 min-w-11 items-center transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine-300"
           >
-            <GhvinolaWordmark className="h-8 w-auto lg:h-10" />
+            <HeaderLogo variant={isHeroLogoInSight ? 'icon' : 'wordmark'} />
             <span className="sr-only">10X Shop</span>
           </Link>
 

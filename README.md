@@ -30,9 +30,10 @@ Login is simulated in the browser, so any username and a password of at least 6 
 ### FULL and extras
 
 - [x] Wine color palette as Tailwind `@theme` tokens
-- [x] Custom hooks: `useAuth`; `useSmoothScroll` for smooth mouse-wheel scrolling without a library (off when the user prefers reduced motion); and `useHeaderScroll`, which moves the header up with the page as you scroll down and slides it back in when you scroll up
-- [x] Home hero with a looping grape-harvest video (a still image when the user prefers reduced motion). On large screens it stays pinned while the page slides up over it, and the header starts see-through over it and turns wine-colored once you scroll.
+- [x] Custom hooks: `useAuth`; `useSmoothScroll` for smooth mouse-wheel scrolling without a library (off when the user prefers reduced motion); `useHeaderScroll`, which moves the header up with the page as you scroll down and slides it back in when you scroll up; and `useHeroLogoInSight`, which tells the header whether the hero's big wordmark is on screen
+- [x] Home hero with a looping grape-harvest video (a still image when the user prefers reduced motion). On large screens it stays pinned while the page slides up over it, and the header starts see-through over it and turns wine-colored once you scroll. While the hero's big wordmark is on screen the header shows only the ღ icon with its grape bunch, and once the wordmark is out of sight the icon unrolls into the full Ghvinola wordmark (with reduced motion it simply swaps).
 - [x] Georgia map icon with the Imereti region around Kutaisi highlighted
+- [x] Home showcase with three 3D gift boxes rendered in Blender (wine, wine and chocolate, Chocola chocolate). Drag a box to turn it; click it to open the lid, then a wine panel slides over the page and takes you to the catalog. Pre-rendered frames on a canvas and the Web Animations API, no 3D or animation library.
 
 ## Tech stack
 
@@ -54,16 +55,16 @@ src/
 ├── api/               products (fetchProducts)
 ├── components/
 │   ├── auth/          LoginForm
-│   ├── home/          Hero, Showcase
-│   ├── layout/        Layout, Header, Footer, ScrollToTop
+│   ├── home/          Hero, Showcase, GiftBox, PageTransition
+│   ├── layout/        Layout, Header, HeaderLogo, Footer, ScrollToTop
 │   ├── product/       ProductCard, ProductGrid
 │   └── ui/            Container, Eyebrow, PageHeader, StatusMessage, TextField, GhvinolaWordmark, GeorgiaMapIcon
 ├── context/           AuthContext (the context and its type), AuthProvider (the state)
-├── hooks/             useAuth, useHeaderScroll, useSmoothScroll
+├── hooks/             useAuth, useHeaderScroll, useHeroLogoInSight, useSmoothScroll
 ├── pages/             CatalogPage, ProductPage, CartPage, CheckoutPage, LoginPage, NotFoundPage
 ├── routes/            AppRoutes, ProtectedRoute
 ├── types/             product, cart, user, checkout
-└── utils/             validation, format (formatPrice, discountedPrice)
+└── utils/             validation, format (formatPrice, discountedPrice), motion (prefersReducedMotion)
 ```
 
 `App` wraps everything in `BrowserRouter` and `AuthProvider`, and `AppRoutes` renders every page inside one `Layout` (header, page, footer). Components read shared state through hooks such as `useAuth`. A user action calls a context function like `login` or `logout`, which replaces the state with a new object, and React re-renders every component that reads it. `ProtectedRoute` sends guests from `/checkout` to `/login` with the original path in router state, and the login page navigates back there after a successful login.
@@ -96,7 +97,7 @@ Then open http://localhost:5173.
 ## Results so far
 
 - `typecheck`: 0 errors. `lint`: 0 warnings.
-- Production bundle: 91 kB of JavaScript and 6 kB of CSS (gzip).
+- Production bundle: 94 kB of JavaScript and 6 kB of CSS (gzip). The gift box frames (about 1.6 MB) load only when the boxes come near the screen.
 - Tested in Chrome at 375px and desktop widths: no horizontal scroll, tap targets at least 44px.
 
 ## Limitations
@@ -113,5 +114,6 @@ Then open http://localhost:5173.
 - Chocolate partner: [Chocola](https://chocola.ge/)
 - Hero video: vineyard clips from [Pexels](https://www.pexels.com/) (free to use under the Pexels license)
 - Map borders: [Natural Earth](https://www.naturalearthdata.com/) (public domain)
+- Gift boxes: modelled and rendered in [Blender](https://www.blender.org/); only the rendered frames are in the repo
 - Fonts: EB Garamond and Montserrat from [Google Fonts](https://fonts.google.com/)
 - Built with help from AI coding assistants in Cursor

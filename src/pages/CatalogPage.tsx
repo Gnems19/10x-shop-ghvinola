@@ -42,7 +42,8 @@ export default function CatalogPage() {
       {/* Positioned and opaque so it slides over the hero, which stays pinned on large screens. */}
       <div className="relative z-10">
         <Showcase />
-        <section id="catalog" className="scroll-mt-24 bg-cream py-20 lg:py-32">
+        {/* tabIndex -1 lets the showcase move keyboard focus here after opening a gift box. */}
+        <section id="catalog" tabIndex={-1} className="scroll-mt-24 bg-cream py-20 outline-none lg:py-32">
           <Container>
             <PageHeader eyebrow="Shop" title="Catalog" as="h2">
               {products.length > 0 && (

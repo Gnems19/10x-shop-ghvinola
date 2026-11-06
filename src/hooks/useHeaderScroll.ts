@@ -5,6 +5,7 @@ const REVEAL_AFTER = 20
 const REVEAL_PER_SECOND = 11
 
 interface HeaderScroll {
+  header: HTMLElement | null
   headerRef: (element: HTMLElement | null) => void
   isAtTop: boolean
 }
@@ -83,5 +84,5 @@ export default function useHeaderScroll(keepShown: boolean): HeaderScroll {
     }
   }, [header, keepShown])
 
-  return { headerRef: setHeader, isAtTop }
+  return { header, headerRef: setHeader, isAtTop }
 }

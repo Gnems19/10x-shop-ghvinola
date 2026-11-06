@@ -22,7 +22,7 @@ export default function Hero() {
   const motionOk = useMotionOk()
 
   return (
-    <section className="relative flex min-h-svh flex-col overflow-hidden text-cream lg:sticky lg:top-0">
+    <section id="hero" className="relative flex min-h-svh flex-col overflow-hidden text-cream lg:sticky lg:top-0">
       <img src="/hero-poster.jpg" alt="" className="absolute inset-0 h-full w-full object-cover" />
       {motionOk && (
         <video
